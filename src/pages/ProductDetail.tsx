@@ -7,13 +7,18 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, MessageCircle, Minus, Plus, Share2, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(0);
 
   const product = products.find(p => p.id === id) || products[0];
   const relatedProducts = products.filter(p => p.id !== product.id).slice(0, 4);
+
+  // Simulate multiple images using the same product image with slight variations
+  const galleryImages = [product.image, ...relatedProducts.slice(0, 3).map(p => p.image)];
 
   return (
     <Layout>
@@ -34,13 +39,33 @@ const ProductDetail = () => {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="aspect-[3/4] rounded-xl border border-border bg-muted overflow-hidden"
+            className="space-y-3"
           >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="h-full w-full object-cover object-top"
-            />
+            {/* Main Image */}
+            <div className="aspect-square rounded-xl border border-border bg-muted overflow-hidden">
+              <img
+                src={galleryImages[selectedImage]}
+                alt={product.name}
+                className="h-full w-full object-cover object-top transition-all duration-300"
+              />
+            </div>
+            {/* Thumbnail Gallery */}
+            <div className="grid grid-cols-4 gap-2">
+              {galleryImages.map((img, i) => (
+                <button
+                  key={i}
+                  onClick={() => setSelectedImage(i)}
+                  className={cn(
+                    "aspect-square rounded-lg border overflow-hidden bg-muted transition-all",
+                    selectedImage === i
+                      ? "border-primary ring-1 ring-primary"
+                      : "border-border hover:border-muted-foreground/40"
+                  )}
+                >
+                  <img src={img} alt={`${product.name} ${i + 1}`} className="h-full w-full object-cover object-top" />
+                </button>
+              ))}
+            </div>
           </motion.div>
 
           {/* Info */}
