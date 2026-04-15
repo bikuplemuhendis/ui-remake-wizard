@@ -7,13 +7,18 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, MessageCircle, Minus, Plus, Share2, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(0);
 
   const product = products.find(p => p.id === id) || products[0];
   const relatedProducts = products.filter(p => p.id !== product.id).slice(0, 4);
+
+  // Simulate multiple images using the same product image with slight variations
+  const galleryImages = [product.image, ...relatedProducts.slice(0, 3).map(p => p.image)];
 
   return (
     <Layout>
