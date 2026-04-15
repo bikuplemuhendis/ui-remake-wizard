@@ -159,6 +159,22 @@ const ProductDetail = () => {
             </TabsContent>
           </Tabs>
         </div>
+
+        {/* Related Products */}
+        <div className="mt-12 pt-8 border-t border-border">
+          <h3 className="text-lg font-semibold text-foreground mb-4">Beğenebileceğiniz...</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {relatedProducts.map((p) => (
+              <a key={p.id} href={`/urun/${p.id}`} className="group">
+                <div className="aspect-square rounded-lg border border-border overflow-hidden bg-muted">
+                  <img src={p.image} alt={p.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform" />
+                </div>
+                <p className="mt-1 text-sm text-muted-foreground line-clamp-2">{p.name}</p>
+                <p className="text-sm font-bold text-primary">{p.price} ₺</p>
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </Layout>
   );
