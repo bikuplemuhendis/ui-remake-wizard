@@ -130,21 +130,6 @@ const ProductDetail = () => {
               Paylaş
             </button>
 
-            {/* Related */}
-            <div className="pt-4 border-t border-border">
-              <h3 className="text-sm font-semibold text-foreground mb-3">Beğenebileceğiniz...</h3>
-              <div className="grid grid-cols-3 gap-3">
-                {relatedProducts.slice(0, 3).map((p) => (
-                  <a key={p.id} href={`/urun/${p.id}`} className="group">
-                    <div className="aspect-square rounded-lg border border-border overflow-hidden bg-muted">
-                      <img src={p.image} alt={p.name} className="h-full w-full object-cover group-hover:scale-105 transition-transform" />
-                    </div>
-                    <p className="mt-1 text-xs text-muted-foreground line-clamp-2">{p.name}</p>
-                    <p className="text-xs font-bold text-primary">{p.price} ₺</p>
-                  </a>
-                ))}
-              </div>
-            </div>
           </motion.div>
         </div>
 
